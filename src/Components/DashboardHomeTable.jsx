@@ -1,6 +1,5 @@
 import { Table } from "antd";
 import { useFetchUsersQuery } from "../redux/features/userSlice";
-import exlamIcon from "../assets/images/exclamation-circle.png";
 import { useState } from "react";
 
 const DashboardHomeTable = () => {
