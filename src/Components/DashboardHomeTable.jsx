@@ -1,71 +1,91 @@
 import { Table } from "antd";
-import { Link } from "react-router-dom";
+import { useFetchUsersQuery } from "../redux/features/userSlice";
 import exlamIcon from "../assets/images/exclamation-circle.png";
+import { useState } from "react";
 
 const DashboardHomeTable = () => {
+  const { data, isLoading } = useFetchUsersQuery();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  // Check if the data is successfully fetched
+  const users = data?.data?.result || [];
 
+  const handlePaginationChange = (page, limit) => {
+    setCurrentPage(page);
+    setPageSize(limit);
+  };
 
   const columns = [
     {
       title: "#SI",
-      dataIndex: "transIs",
-      key: "transIs",
-      render: (text) => <a>{text}</a>,
+      dataIndex: "_id",
+      key: "_id",
+      render: (text, record, index) => <a>{index + 1}</a>, // Display index + 1 as the serial number
     },
+
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      render: (image) => {
+        const isExternalImage =
+          image.startsWith("http") || image.startsWith("https");
+        return isExternalImage ? (
+          <img
+            src={image}
+            alt="product"
+            style={{ width: 50, height: 50, objectFit: "cover" }}
+          />
+        ) : (
+          <img
+            src={`${import.meta.env.VITE_BASE_URL}${image}`}
+            alt="product"
+            style={{
+              width: 50,
+              height: 50,
+              objectFit: "cover",
+              borderRadius: "50%",
+            }}
+          />
+        );
+      },
+    },
+
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
     },
+
     {
       title: "Email",
-      dataIndex: "Email",
-      key: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: "Phone Number",
+      title: "Status",
       key: "Address",
-      dataIndex: "Address",
-    },
-    {
-      title: "Action",
-      key: "Review",
-      aligen: 'center',
-      render: (_, data) => (
-        <div className="  items-center justify-around textcenter flex">
-          {/* Review Icon */}
-          <img src={exlamIcon} alt="" className="btn  px-3 py-1 text-sm rounded-full" />
-          {/* <Link to={'/reviews'} className="btn bg-black text-white px-3 py-1 text-sm rounded-full">
-           
-            View
-          </Link> */}
-        </div>
-      ),
+      render: (text, record) => record.status, // If Address is the status in your data structure
     },
   ];
-
-  const data = [];
-  for (let index = 0; index < 6; index++) {
-    data.push({
-      transIs: `${index + 1}`,
-      name: "Henry",
-      Email: "sharif@gmail.com",
-      Address: "Dhaka, Bangladesh",
-      Review: "See Review",
-      date: "16 Apr 2024",
-      _id: index,
-    });
-  }
 
   return (
     <div className="rounded-lg border py-4 border-black mt-8 recent-users-table">
       <h3 className="text-2xl text-black mb-4 pl-2">Recent Users</h3>
       {/* Ant Design Table */}
+
       <Table
         columns={columns}
-        dataSource={data}
-        pagination={{ position: ["bottomCenter"] }}
-        className="rounded-lg"
+        dataSource={users} // Use the filtered data
+        rowClassName={() => "custom-row"}
+        pagination={{
+          pageSize: pageSize,
+          total: data?.meta?.total, // Update the pagination total count
+          current: currentPage,
+          defaultCurrent: 1,
+          showSizeChanger: false,
+          onChange: handlePaginationChange,
+        }}
       />
     </div>
   );

@@ -1,16 +1,12 @@
 import baseApi from "../app/baseApi";
 
-
-
-
 export const userApi = baseApi.injectEndpoints({
-  
   endpoints: (builder) => ({
     // Fetch all users
-   
+
     fetchUsers: builder.query({
       query: () => ({
-        url: "/user/all-user",
+        url: "/user/get-all-users",
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -78,7 +74,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["User"], // Provides 'User' tag
     }),
-
   }),
 });
 
@@ -88,6 +83,5 @@ export const {
   useLoginInfoQuery,
   useAdminProfileQuery,
   useUpdateProfileMutation,
-  useFeedbackQuery
+  useFeedbackQuery,
 } = userApi;
-
