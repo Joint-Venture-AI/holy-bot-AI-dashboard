@@ -47,7 +47,7 @@ export const userApi = baseApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       }),
-      providesTags: ["User"], // Provides 'User' tag
+      providesTags: ["User"],
     }),
 
     // Update user profile
@@ -63,17 +63,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"], // Invalidates 'User' tag after mutation
     }),
-
-    feedback: builder.query({
-      query: (_id) => ({
-        url: `/review/single-review/${_id}`,
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }),
-      providesTags: ["User"], // Provides 'User' tag
-    }),
   }),
 });
 
@@ -83,5 +72,4 @@ export const {
   useLoginInfoQuery,
   useAdminProfileQuery,
   useUpdateProfileMutation,
-  useFeedbackQuery,
 } = userApi;

@@ -29,9 +29,7 @@ const Sidebar = () => {
       }
     });
   };
-  useEffect(() => {
-    // console.log(location.pathname.includes("earnings"));
-  }, [location.pathname]);
+  useEffect(() => {}, [location.pathname]);
   return (
     <div className="fixed top-0 left-0 w-[290px] min-h-screen h-full pr-0 bg-[#f6f7f0]">
       <div className="h-full flex flex-col justify-between  pt-[50px] border drop-shadow">

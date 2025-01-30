@@ -141,10 +141,10 @@ const Earnings = () => {
         backgroundColor="bg-[#EDEAF3]"
       >
         <div>
-          <h2 className="text-lg text-center mb-4">Transaction Details</h2>
+          <h2 className="text-lg text-center mb-4">Subscriptation Details</h2>
           <div className="flex justify-between mb-6 text-gray-600">
-            <p>Transaction ID:</p>
-            <p>{modalData._id}</p>
+            <p>subscriptation ID:</p>
+            <p>{modalData.subscriptionId}</p>
           </div>
           <div className="flex justify-between mb-6 text-gray-600">
             <p>Date:</p>
