@@ -4,6 +4,7 @@ import { PolicyApi } from "../features/PolicySlice";
 import { authApi } from "../features/authSlice";
 import { DashboardApi } from "../features/dashboardApi";
 import { TransactionApi } from "../features/transactionApi";
+import { SettingApi } from "../features/settingApi";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     [PolicyApi.reducerPath]: PolicyApi.reducer,
     [DashboardApi.reducerPath]: DashboardApi.reducer,
     [TransactionApi.reducerPath]: TransactionApi.reducer,
+    [SettingApi.reducerPath]: SettingApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -19,7 +21,8 @@ const store = configureStore({
       PolicyApi.middleware,
       authApi.middleware,
       DashboardApi.middleware,
-      TransactionApi.middleware
+      TransactionApi.middleware,
+      SettingApi.middleware
     ),
 });
 

@@ -1,116 +1,186 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
-import dashProfile from "../../assets/images/dashboard-profile.png";
-// import "react-phone-number-input/style.css";
-// import PhoneInput from "react-phone-number-input";
-import { FiEdit } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import PhoneCountryInput from "../../Components/PhoneCountryInput";
-import PageHeading from "../../Components/PageHeading";
-import { PiCameraPlus } from "react-icons/pi";
-import { FaAngleLeft } from "react-icons/fa6";
+import {
+  useAdminProfileQuery,
+  useUpdateProfileMutation,
+} from "../../redux/features/userSlice";
+import Loading from "../../Components/Shared/Loading";
+import { CiEdit } from "react-icons/ci";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import Swal from "sweetalert2";
 
-const EditMyProfile = () => {
-  const [code, setCode] = useState();
-  const navigate = useNavigate();
-  const onFinish = (values) => {
-    console.log("Success:", values);
+const EditProfile = () => {
+  const [form] = Form.useForm(); // Bind the form instance
+  const [imagePreview, setImagePreview] = useState(null);
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const { data, isLoading } = useAdminProfileQuery(undefined);
+
+  const [updateProfile] = useUpdateProfileMutation();
+
+  useEffect(() => {
+    if (data?.data) {
+      form.setFieldsValue({
+        name: data.data.name,
+        phone: data.data.phone,
+        email: data.data.email,
+        address: data.data.address,
+      });
+
+      // Check if the image exists, and set it in the state
+      const imageUrl = data?.data?.image
+        ? `${import.meta.env.VITE_BASE_URL}${data.data.image}`
+        : logo; // Default to '/user.svg' if image doesn't exist
+      setImagePreview(imageUrl);
+    }
+  }, [data, form]);
+
+  const onFinish = async (values) => {
+    setLoading(true);
+
+    try {
+      // Create a new FormData instance
+      const formData = new FormData();
+
+      // Append the form values (title and description)
+      formData.append("data", JSON.stringify(values));
+
+      if (file) {
+        formData.append("image", file);
+      }
+
+      const res = await updateProfile(formData).unwrap();
+
+      if (res?.success) {
+        // Handle success and return the updated data
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: `${res.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          position: "top",
+          icon: "error",
+          title: "Failed to update Profile",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.log("Error updating Profile:", error);
+      Swal.fire({
+        position: "top",
+        icon: "error",
+        title: "An error occurred",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+
+  const handleImageChange = (event) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      const isValidImage = selectedFile.type.startsWith("image/");
+      if (!isValidImage) {
+        alert("Please upload a valid image file.");
+        return;
+      }
+      if (selectedFile.size > 5 * 1024 * 1024) {
+        alert("File size must be less than 5MB.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result);
+        setFile(selectedFile);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
   };
-  const profileData = {
-    name: "Jane Kooper",
-    email: "enrique@gmail.com",
-    phone: "+880 150597212",
-    profile: dashProfile,
-  };
-  // console.log(code);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
-    <>
-      <div className="flex items-center gap-2 text-xl">
-        <FaAngleLeft />
-        <h1>Personal information</h1>
-      </div>
-      <div className="rounded-lg py-4 border-lightGray border-2 shadow-lg mt-8 bg-white">
-        <div className="space-y-[24px] min-h-[83vh] bg-light-gray rounded-2xl">
-          <h3 className="text-2xl text-black mb-4 pl-5 border-b-2 border-lightGray/40 pb-3">
-            Personal information
-          </h3>
-          <div className="w-full">
-            <Form
-              name="basic"
-              layout="vertical"
-              className="w-full grid grid-cols-12 gap-x-10 px-14 py-8"
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="off"
-              initialValues={{
-                name: profileData.name,
-                email: profileData.email,
-              }}
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+      <Form
+        form={form}
+        name="update_profile"
+        layout="vertical"
+        onFinish={onFinish}
+      >
+        {/* Banner Image */}
+        <div className="flex justify-center mb-6">
+          <div className="w-[150px] h-[150px] relative">
+            <img
+              src={imagePreview}
+              alt="User Profile"
+              className="w-full h-full object-cover rounded-full"
+            />
+            <label
+              className="absolute bottom-[10%] cursor-pointer right-[5%] bg-blue-600 rounded-full p-2 text-white"
+              htmlFor="imageUploadBanner"
             >
-              <div className="col-span-3 space-y-6 ">
-                <div className="min-h-[300px] flex flex-col items-center justify-center p-8 border border-black bg-lightGray/15">
-                  <div className="my-2">
-                    <img
-                      src={dashProfile}
-                      alt=""
-                      className="h-28 w-28 rounded-full border-4 border-black"
-                    />
-                  </div>
-                  <h5 className="text-lg text-[#222222]">{"Profile"}</h5>
-                  <h4 className="text-2xl text-[#222222]">{"Admin"}</h4>
-                </div>
-              </div>
-              <div className="col-span-9 space-y-[14px] w-full">
-                <Form.Item
-                  className="text-lg  font-medium text-black -mb-1"
-                  label="Name"
-                  name="name"
-                >
-                  <Input
-                    readOnly
-                    size="large"
-                    className="h-[53px] rounded-lg"
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="text-lg  font-medium text-black"
-                  label="Email"
-                  name="email"
-                >
-                  <Input
-                    readOnly
-                    size="large"
-                    className="h-[53px] rounded-lg"
-                  />
-                </Form.Item>
-                <Form.Item
-                  className="text-lg text-[#222222] font-medium"
-                  label="Phone Number"
-                  name="phone"
-                >
-                  <PhoneCountryInput />
-                </Form.Item>
-                <Form.Item className="flex justify-end pt-4">
-                  <Button
-                    // onClick={(e) => navigate(`edit`)}
-                    size="large"
-                    type="primary"
-                    className="px-8 bg-black text-white hover:bg-black/90 rounded-full font-semibold"
-                  >
-                    Save Changes
-                  </Button>
-                </Form.Item>
-              </div>
-            </Form>
+              <CiEdit size={20} />
+            </label>
+
+            <input
+              id="imageUploadBanner"
+              type="file"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+              accept="image/*"
+            />
           </div>
         </div>
-      </div>
-    </>
+
+        {/* Full Name */}
+        <Form.Item
+          label="Full Name"
+          name="name"
+          rules={[{ required: true, message: "Please enter your name" }]}
+        >
+          <Input placeholder="John Doe" />
+        </Form.Item>
+
+        {/* Address */}
+        <Form.Item label="Address" name="address">
+          <Input placeholder="Enter your address" />
+        </Form.Item>
+
+        {/* Phone Number */}
+        <Form.Item label="Phone Number" name="phone">
+          <PhoneInput
+            country="us"
+            inputClass="!w-full !px-4 !py-3 !border !border-gray-300 !rounded-lg !focus:outline-none !focus:ring-2 !focus:ring-blue-400"
+            containerClass="!w-full"
+          />
+        </Form.Item>
+
+        {/* Submit Button */}
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            className="w-full"
+          >
+            {loading ? "Submitting..." : "Submit"}
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 
-export default EditMyProfile;
+export default EditProfile;

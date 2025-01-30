@@ -52,16 +52,15 @@ export const userApi = baseApi.injectEndpoints({
 
     // Update user profile
     updateProfile: builder.mutation({
-      query: (updateInfo) => ({
+      query: (userInfo) => ({
         url: "/user/update-profile",
-        method: "POST",
-        body: updateInfo,
+        method: "PATCH",
+        body: userInfo,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          // "Content-Type": "application/json",
         },
       }),
-      invalidatesTags: ["User"], // Invalidates 'User' tag after mutation
+      invalidatesTags: ["User"],
     }),
   }),
 });
