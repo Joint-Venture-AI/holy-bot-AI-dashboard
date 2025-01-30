@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useGetAllPackagesQuery } from "../../../redux/features/packageApi";
 import Loading from "../../../Components/Shared/Loading";
 
 export default function Subscription() {
   const { data, isLoading } = useGetAllPackagesQuery();
-
+  const navigate = useNavigate();
   if (isLoading) {
     return <Loading />;
   }
@@ -12,12 +12,17 @@ export default function Subscription() {
   // Ensure data is available
   const plans =
     data?.data?.map((plan) => ({
+      id: plan._id,
       title: plan.name, // "Premium Package" / "Basic Package"
       price: `$${plan.unitAmount}`, // "$50.99"
       billing: plan.interval === "year" ? "Yearly" : "Monthly", // "year" => "Yearly"
       features: plan.description || [], // Ensure it's an array
     })) || [];
 
+  const handleDetails = (plan) => {
+    console.log(plan);
+    navigate(`/settings/editSubscription/${plan.id}`); // ✅ Correct usage
+  };
   return (
     <div>
       <div className="flex justify-end">
@@ -49,11 +54,12 @@ export default function Subscription() {
                   </li>
                 ))}
               </ul>
-              <Link to={"/settings/editSubscription"}>
-                <button className="w-full bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition">
-                  Edit
-                </button>
-              </Link>
+              <button
+                onClick={() => handleDetails(plan)}
+                className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition"
+              >
+                View Details
+              </button>
             </div>
           ))}
         </div>

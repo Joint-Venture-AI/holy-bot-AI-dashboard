@@ -116,7 +116,7 @@ export const dashboardItems = [
       },
       {
         name: "EditSubscription ",
-        path: "settings/editSubscription",
+        path: "settings/editSubscription/:id",
         icon: IoSettingsOutline,
         element: <EditSubscription />,
       },
