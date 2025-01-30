@@ -43,6 +43,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import Subscription from "../pages/Main/Subscription/Subscription";
 import EditSubscription from "../pages/Main/EditSubscription/EditSubscription";
 import Notifications from "../pages/Main/Support/Notifications";
+import AddPackage from "../pages/Main/EditSubscription/AddPackage";
 
 export const dashboardItems = [
   {
@@ -64,20 +65,18 @@ export const dashboardItems = [
     element: <Guests />,
   },
 
-
   {
     name: "Subscription",
     path: "subscription",
     icon: GrUserManager,
     element: <Subscription />,
-    
   },
-  // {
-  //   name: "EditSubscription ",
-  //   path: "editSubscription",
-  //   icon: IoSettingsOutline,
-  //   element: <EditSubscription />,
-  // },
+  {
+    // name: "Add Package",
+    path: "add-package",
+    // icon: IoSettingsOutline,
+    element: <AddPackage />,
+  },
   {
     // name: "Support",
     path: "support",

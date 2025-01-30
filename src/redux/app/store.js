@@ -5,6 +5,7 @@ import { authApi } from "../features/authSlice";
 import { DashboardApi } from "../features/dashboardApi";
 import { TransactionApi } from "../features/transactionApi";
 import { SettingApi } from "../features/settingApi";
+import { PackageApi } from "../features/packageApi";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     [DashboardApi.reducerPath]: DashboardApi.reducer,
     [TransactionApi.reducerPath]: TransactionApi.reducer,
     [SettingApi.reducerPath]: SettingApi.reducer,
+    [PackageApi.reducerPath]: PackageApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -22,7 +24,8 @@ const store = configureStore({
       authApi.middleware,
       DashboardApi.middleware,
       TransactionApi.middleware,
-      SettingApi.middleware
+      SettingApi.middleware,
+      PackageApi.middleware
     ),
 });
 
