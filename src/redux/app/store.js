@@ -6,6 +6,7 @@ import { DashboardApi } from "../features/dashboardApi";
 import { TransactionApi } from "../features/transactionApi";
 import { SettingApi } from "../features/settingApi";
 import { PackageApi } from "../features/packageApi";
+import { NotificationApi } from "../features/notificationApi";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     [TransactionApi.reducerPath]: TransactionApi.reducer,
     [SettingApi.reducerPath]: SettingApi.reducer,
     [PackageApi.reducerPath]: PackageApi.reducer,
+    [NotificationApi.reducerPath]: NotificationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -25,7 +27,8 @@ const store = configureStore({
       DashboardApi.middleware,
       TransactionApi.middleware,
       SettingApi.middleware,
-      PackageApi.middleware
+      PackageApi.middleware,
+      NotificationApi.middleware
     ),
 });
 

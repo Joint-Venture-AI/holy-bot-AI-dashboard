@@ -14,6 +14,7 @@ export const baseApi = createApi({
     "Transaction",
     "Settings",
     "Package",
+    "Notification",
   ], // Added all necessary tags
   endpoints: () => ({}), // Empty object for the base API setup
 });
