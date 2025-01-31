@@ -90,6 +90,12 @@ export const dashboardItems = [
     element: <Setting />,
   },
   {
+    // name: "EditSubscription ",
+    path: "settings/editSubscription/:id",
+    // icon: IoSettingsOutline,
+    element: <EditSubscription />,
+  },
+  {
     path: "/hosts/:id",
     element: <HostDetails />,
   },
@@ -114,12 +120,12 @@ export const dashboardItems = [
         path: "settings/change-password",
         element: <ChangePassword />,
       },
-      {
-        name: "EditSubscription ",
-        path: "settings/editSubscription/:id",
-        icon: IoSettingsOutline,
-        element: <EditSubscription />,
-      },
+      // {
+      //   name: "EditSubscription ",
+      //   path: "settings/editSubscription/:id",
+      //   icon: IoSettingsOutline,
+      //   element: <EditSubscription />,
+      // },
       {
         path: "settings/settings/change-password/forgot-password",
         element: <ForgotPassword />,

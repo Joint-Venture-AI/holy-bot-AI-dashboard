@@ -19,7 +19,7 @@ const DashboardHome = () => {
           <div className="text-center">
             <h3 className="text-[20px]">{"Total Earnings"}</h3>
             <h3 className="text-[30px] font-extralight">
-              {statistics?.totalEarnings}
+              {Math.floor(statistics?.totalEarnings || 0)} $
             </h3>
           </div>
         </div>

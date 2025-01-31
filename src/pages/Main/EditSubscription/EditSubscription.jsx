@@ -27,7 +27,11 @@ const EditSubscription = () => {
       setPackageName(data.data.name || "");
       setPackageAmount(data.data.unitAmount || "");
       setPackageExpiration(data.data.interval || "");
-      setFeatures(data.data.description || []);
+
+      // Convert description into an array
+      setFeatures(
+        Array.isArray(data.data.description) ? data.data.description : []
+      );
     }
   }, [isLoading, data]);
 
@@ -44,12 +48,8 @@ const EditSubscription = () => {
 
   const handleAddFeature = () => {
     if (newFeature.trim()) {
-      // Update state with the new feature added
-      setFeatures((prevFeatures) => {
-        const updatedFeatures = [...prevFeatures, newFeature];
-        return updatedFeatures;
-      });
-      setNewFeature(""); // Clear the input field after adding
+      setFeatures((prevFeatures) => [...prevFeatures, newFeature]);
+      setNewFeature(""); // Clear input
     }
   };
 
@@ -74,7 +74,7 @@ const EditSubscription = () => {
           text: "Package Updated successfully",
           icon: "success",
         });
-        // router("/subscription");
+        router("/subscription");
       }
     } catch (error) {
       Swal.fire({
