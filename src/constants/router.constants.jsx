@@ -16,7 +16,7 @@ import {
   MdOutlineSecurityUpdateWarning,
 } from "react-icons/md";
 import HostDetails from "../pages/Main/Host/HostDetails";
-import { LuWallet } from "react-icons/lu";
+import { LuFileQuestion, LuWallet } from "react-icons/lu";
 import { FaServicestack } from "react-icons/fa6";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { PiHandWithdrawBold } from "react-icons/pi";
@@ -44,6 +44,8 @@ import Subscription from "../pages/Main/Subscription/Subscription";
 import EditSubscription from "../pages/Main/EditSubscription/EditSubscription";
 import Notifications from "../pages/Main/Support/Notifications";
 import AddPackage from "../pages/Main/EditSubscription/AddPackage";
+import Question from "../Components/QuestionAndAns/Question";
+import QuestionDetails from "../Components/QuestionAndAns/QuestionDetails";
 
 export const dashboardItems = [
   {
@@ -70,6 +72,18 @@ export const dashboardItems = [
     path: "subscription",
     icon: GrUserManager,
     element: <Subscription />,
+  },
+  {
+    name: "Question And Answer",
+    path: "question",
+    icon: LuFileQuestion,
+    element: <Question />,
+  },
+  {
+    // name: "Question And Answer",
+    path: "questionDetails/:id",
+    // icon: LuFileQuestion,
+    element: <QuestionDetails />,
   },
   {
     // name: "Add Package",
