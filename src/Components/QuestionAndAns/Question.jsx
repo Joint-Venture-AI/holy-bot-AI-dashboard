@@ -36,7 +36,7 @@ const Question = () => {
       title: "Question",
       dataIndex: "question",
       key: "question",
-      render: (text) => (text ? text.slice(0, 100) + "..." : "N/A"),
+      render: (text) => (text ? text.slice(0, 50) + "..." : "N/A"),
     },
     {
       title: "Answer",
