@@ -54,7 +54,8 @@ const Question = () => {
       title: "Question",
       dataIndex: "question",
       key: "question",
-      render: (text) => (text ? text.slice(0, 50) + "..." : "N/A"),
+      render: (text) =>
+        text && text.length > 50 ? text.slice(0, 50) + "..." : text || "N/A",
     },
     {
       title: "Answer",
@@ -111,8 +112,6 @@ const Question = () => {
         UserEmail: modalData.user?.email || "N/A", // Add more fields if needed
       },
     ];
-
-    console.log(data, "data");
 
     // Convert the data to CSV format
     const csv = Papa.unparse(data);
