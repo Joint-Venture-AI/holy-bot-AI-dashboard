@@ -3,8 +3,8 @@ import baseApi from "../app/baseApi";
 export const QuestionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllQuestions: builder.query({
-      query: ({ page, limit }) => ({
-        url: `/request/get-all-admin?page=${page}&limit=${limit}`,
+      query: ({ page, limit, email, question }) => ({
+        url: `/request/get-all-admin?page=${page}&limit=${limit}&email=${email}&searchTerm=${question}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

@@ -1,20 +1,27 @@
 import React, { useState } from "react";
-import { Button, Table } from "antd";
+import { Button, Input, Table } from "antd";
 import Loading from "../Shared/Loading";
 import { useGetAllQuestionsQuery } from "../../redux/features/questionApi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { CiSearch } from "react-icons/ci";
 
 const Question = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [searchEmail, setSearchEmail] = useState("");
+  const [searchQuestion, setSearchQuestion] = useState("");
+  const [searchTermEmail, setSearchTermEmail] = useState("");
+  const [searchTermQuestion, setSearchTermQuestion] = useState("");
   const navigate = useNavigate();
-  // Correctly passing pagination parameters to the query
+
+  // Fetch data with the confirmed search terms
   const { data: datas, isLoading } = useGetAllQuestionsQuery({
     page: currentPage,
     limit: pageSize,
+    email: searchTermEmail,
+    question: searchTermQuestion,
   });
 
-  // Check if the data is successfully fetched
   const users = datas?.data?.result || [];
 
   const handlePaginationChange = (page, pageSize) => {
@@ -22,9 +29,15 @@ const Question = () => {
     setPageSize(pageSize);
   };
 
-  const handleDetails = (record) => {
-    navigate(`/questionDetails/${record._id}`); // Navigate to the details page with the question ID
+  const handleSearch = () => {
+    setSearchTermEmail(searchEmail);
+    setSearchTermQuestion(searchQuestion);
   };
+
+  const handleDetails = (record) => {
+    navigate(`/questionDetails/${record._id}`);
+  };
+
   const columns = [
     {
       title: "#SL",
@@ -65,9 +78,32 @@ const Question = () => {
 
   return (
     <div className="rounded-lg border py-4 border-black mt-8 recent-users-table">
-      <h3 className="text-2xl text-black mb-4 pl-2">
-        All Questions And Answers
-      </h3>
+      <div className="flex justify-between gap-2">
+        <div>
+          <button className="bg-[#DD800C] text-white h-10 w-60 flex items-center justify-center rounded-full shadow-md cursor-pointer">
+            All Questions and Answers
+          </button>
+        </div>
+        <div className="flex gap-2 my-2">
+          <Input
+            placeholder="Search by Email"
+            value={searchEmail}
+            onChange={(e) => setSearchEmail(e.target.value)}
+            style={{ width: "250px", height: "40px" }}
+            prefix={<CiSearch />}
+          />
+          <Input
+            placeholder="Search by Question"
+            value={searchQuestion}
+            onChange={(e) => setSearchQuestion(e.target.value)}
+            style={{ width: "250px", height: "40px" }}
+            prefix={<CiSearch />}
+          />
+          <Button type="primary" onClick={handleSearch}>
+            Search
+          </Button>
+        </div>
+      </div>
       <Table
         columns={columns}
         dataSource={users}
