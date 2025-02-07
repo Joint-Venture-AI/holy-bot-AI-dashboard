@@ -80,21 +80,20 @@ export const dashboardItems = [
     element: <Question />,
   },
   {
-    // name: "Question And Answer",
+
     path: "questionDetails/:id",
-    // icon: LuFileQuestion,
     element: <QuestionDetails />,
   },
   {
-    // name: "Add Package",
+
     path: "add-package",
-    // icon: IoSettingsOutline,
+
     element: <AddPackage />,
   },
   {
-    // name: "Support",
+
     path: "support",
-    // icon: BiSupport,
+
     element: <Notifications />,
   },
   {
@@ -104,9 +103,9 @@ export const dashboardItems = [
     element: <Setting />,
   },
   {
-    // name: "EditSubscription ",
+  
     path: "settings/editSubscription/:id",
-    // icon: IoSettingsOutline,
+
     element: <EditSubscription />,
   },
   {
@@ -134,12 +133,7 @@ export const dashboardItems = [
         path: "settings/change-password",
         element: <ChangePassword />,
       },
-      // {
-      //   name: "EditSubscription ",
-      //   path: "settings/editSubscription/:id",
-      //   icon: IoSettingsOutline,
-      //   element: <EditSubscription />,
-      // },
+      
       {
         path: "settings/settings/change-password/forgot-password",
         element: <ForgotPassword />,

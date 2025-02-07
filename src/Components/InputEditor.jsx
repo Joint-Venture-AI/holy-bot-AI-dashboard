@@ -13,7 +13,7 @@ const InputEditor = ({ placeholder }) => {
     }),
     [placeholder]
   );
-  console.log(content);
+
   return (
     <div className="rounded-xl border-[0.05px] border-[#98CBC6] overflow-hidden">
       <JoditEditor

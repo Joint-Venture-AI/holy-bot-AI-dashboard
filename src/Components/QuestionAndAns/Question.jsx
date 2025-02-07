@@ -64,19 +64,7 @@ const Question = () => {
       render: (text) => (text ? text.slice(0, 100) + "..." : "N/A"),
     },
     {
-      title: "Action",
-      key: "action",
-      align: "center",
-      //   render: (_, record) => (
-      //     <div style={{ display: "flex", gap: "8px" }}>
-      //       <Button
-      //         className="bg-[#F6FAFF] text-[#023F86]"
-      //         onClick={() => handleDetails(record)}
-      //       >
-      //         View
-      //       </Button>
-      //     </div>
-      //   ),
+
 
       title: "Action",
       key: "action",
@@ -109,7 +97,7 @@ const Question = () => {
         Question: modalData.question || "N/A",
         Answer: modalData.answer || "N/A",
         UserName: modalData.user?.name || "Anonymous",
-        UserEmail: modalData.user?.email || "N/A", // Add more fields if needed
+        UserEmail: modalData.user?.email || "N/A", 
       },
     ];
 
@@ -120,10 +108,10 @@ const Question = () => {
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `question_${modalData._id}.csv`; // Set the file name
-    document.body.appendChild(link); // Append to body to ensure proper triggering
+    link.download = `question_${modalData._id}.csv`; 
+    document.body.appendChild(link); 
     link.click();
-    document.body.removeChild(link); // Clean up after download
+    document.body.removeChild(link); 
   };
 
   return (

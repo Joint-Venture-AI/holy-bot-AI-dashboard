@@ -43,10 +43,7 @@ const SupportChatHeader = () => {
 
     <div className="w-full h-[88px] flex justify-between items-center rounded-sm py-[16px] px-[32px]">
       <div className="text-start space-y-0.5">
-        {/* <p className="text-sm md:text-xl font-light">
-          {"Welcome, Jane Cooper"}
-        </p>
-        <p className="text-sm md:text-xl">{"Have a nice day!"}</p> */}
+       
         <img src={logoImg} alt="" className="w-40 h-40 object-contain" />
       </div>
       <div className="flex gap-x-[41px]">
@@ -55,10 +52,7 @@ const SupportChatHeader = () => {
           className="relative flex items-center "
         >
           <Badge style={{ backgroundColor: "#000000", width: '20px', height: '20px', objectFit: 'contain' }} count={1}>
-            {/* <TbBellRinging
-              style={{ cursor: "pointer" }}
-              className={` w-6 h-6 rounded-full shadow-sm  font-bold transition-all`}
-            /> */}
+            
             <img src={bellImg} alt="" className="bg-lightGray p-2 rounded-full" />
           </Badge>
         </div>

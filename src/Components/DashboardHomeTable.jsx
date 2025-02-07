@@ -3,10 +3,10 @@ import { useFetchUsersQuery } from "../redux/features/userSlice";
 import { useState } from "react";
 
 const DashboardHomeTable = () => {
-  const { data, isLoading } = useFetchUsersQuery();
+  const { data } = useFetchUsersQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  // Check if the data is successfully fetched
+
   const users = data?.data?.result || [];
 
   const handlePaginationChange = (page, limit) => {
@@ -19,7 +19,7 @@ const DashboardHomeTable = () => {
       title: "#SI",
       dataIndex: "_id",
       key: "_id",
-      render: (text, record, index) => <a>{index + 1}</a>, // Display index + 1 as the serial number
+      render: (text, record, index) => <a>{index + 1}</a>, 
     },
 
     {
@@ -64,7 +64,7 @@ const DashboardHomeTable = () => {
     {
       title: "Status",
       key: "Address",
-      render: (text, record) => record.status, // If Address is the status in your data structure
+      render: (text, record) => record.status, 
     },
   ];
 

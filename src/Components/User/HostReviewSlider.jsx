@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-// import required modules
+
 import { Pagination, Autoplay } from "swiper/modules";
 import userImg from "../../assets/images/dashboard-profile.png";
 import { Rate } from "antd";

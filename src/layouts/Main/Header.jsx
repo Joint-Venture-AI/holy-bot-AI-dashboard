@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Badge } from "antd";
 import profileImage from "../../assets/images/dash-profile.png";
-import { TbBellRinging } from "react-icons/tb";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { Select } from "antd";
 import { useAdminProfileQuery } from "../../redux/features/userSlice";
 import { useGetANotificationQuery } from "../../redux/features/notificationApi";
 import Loading from "../../Components/Shared/Loading";
@@ -52,12 +48,11 @@ const Header = () => {
       const unreadCount = notification.data.meta.unread;
       setNotificationCount(unreadCount);
 
-      // Persist to localStorage
-      // localStorage.setItem('notificationCount', unreadCount.toString());
+
     }
   }, [notification]);
 
-  // Check if the count is in localStorage on initial render
+
   useEffect(() => {
     const savedCount = localStorage.getItem("notificationCount");
     if (savedCount) {
@@ -68,21 +63,21 @@ const Header = () => {
   useEffect(() => {
     if (!data) return;
 
-    // Create a socket connection
+    
     const socket = io(import.meta.env.VITE_BASE_URL, {
       transports: ["websocket"],
     });
 
-    // Listen for 'get-notification::ADMIN' event
+
     socket.on("get-notification::ADMIN", (newNotification) => {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
         newNotification,
       ]);
-      setNotificationCount((prevCount) => prevCount + 1); // Increment notification count
+      setNotificationCount((prevCount) => prevCount + 1);
     });
 
-    // Cleanup on component unmount
+   
     return () => {
       socket.disconnect();
     };
