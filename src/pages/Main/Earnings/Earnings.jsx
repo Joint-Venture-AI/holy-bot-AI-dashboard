@@ -17,6 +17,8 @@ const Earnings = () => {
   // Check if the data is successfully fetched
   const users = datas?.data?.result || [];
 
+  console.log(datas,'sdfsfdfdfd')
+
   const handlePaginationChange = (page, limit) => {
     setCurrentPage(page);
     setPageSize(limit);

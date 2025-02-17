@@ -9,6 +9,7 @@ const DashboardHomeTable = () => {
 
   const users = data?.data?.result || [];
 
+
   const handlePaginationChange = (page, limit) => {
     setCurrentPage(page);
     setPageSize(limit);
