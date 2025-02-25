@@ -3,6 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // Replace with your base URL
 const API_URL = "https://backend.holybot.ai/api/v1";
 
+console.log(authApi, "authApi");
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
