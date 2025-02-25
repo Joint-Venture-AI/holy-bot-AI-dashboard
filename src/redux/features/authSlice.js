@@ -52,7 +52,7 @@ export const authApi = createApi({
     resetPassword: builder.mutation({
       query: (data) => {
         const token = localStorage.getItem("verify-token");
-        console.log(token, "token");
+
         return {
           url: "/auth/reset-password",
           method: "POST",
