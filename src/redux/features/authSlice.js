@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Replace with your base URL
-const API_URL = "http://159.89.186.224:5002/api/v1";
+const API_URL = "https://backend.holybot.ai/api/v1";
 
 export const authApi = createApi({
   reducerPath: "authApi",

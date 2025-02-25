@@ -78,6 +78,8 @@ const Notifications = () => {
     );
   }
 
+
+
   const handleDeleteNotification = async () => {
     try {
       const res = await deleteNotification("/admin").unwrap();
@@ -167,23 +169,25 @@ const Notifications = () => {
         </div>
 
         {/* Pagination Controls */}
-        <div className="flex justify-center mt-4">
-          <Button
-            className="mr-2"
-            onClick={() => handlePageChange(page - 1)}
-            disabled={page <= 1}
-          >
-            Previous
-          </Button>
-          <span className="text-sm text-gray-500">{`Page ${page}`}</span>
-          <Button
-            className="ml-2"
-            onClick={() => handlePageChange(page + 1)}
-            disabled={data?.meta?.nextPage}
-          >
-            Next
-          </Button>
-        </div>
+      
+          <div className="flex justify-center mt-4">
+            <Button
+              className="mr-2"
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page <= 1}
+            >
+              Previous
+            </Button>
+            <span className="text-sm text-gray-500">{`Page ${page}`}</span>
+            <Button
+              className="ml-2"
+              onClick={() => handlePageChange(page + 1)}
+              disabled={data?.meta?.nextPage}
+            >
+              Next
+            </Button>
+          </div>
+       
       </div>
     </div>
   );
